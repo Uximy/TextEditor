@@ -1,0 +1,163 @@
+﻿<Window x:Class="Text_Editor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Text_Editor"
+        mc:Ignorable="d"
+        Title="Text Editor" MinHeight="500" MinWidth="790" Height="500" Width="790" Icon="text edor icon.png" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Topmost="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="348*"/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="38*"/>
+        </Grid.RowDefinitions>
+        <!--<TextBox HorizontalAlignment="Left" x:Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" BorderBrush="White"  FontSize="21" Grid.Row="1" TextWrapping="Wrap" Width="860" Grid.ColumnSpan="3" Margin="0,0,0,39"/>-->
+        <RichTextBox Name="rtbEditor" Grid.Row="1" Grid.Column="0" SelectionChanged="rtbEditor_SelectionChanged" BorderBrush="White" FontSize="21"/>
+        <Menu Background="White" Grid.Row="0">
+            <MenuItem Padding="6" FontSize="15" Header="File">
+                <MenuItem FontSize="12" Header="Create"></MenuItem>
+                <MenuItem FontSize="12" Header="Open..."></MenuItem>
+                <MenuItem FontSize="12" Header="Save"></MenuItem>
+                <MenuItem FontSize="12" Header="Save as..."></MenuItem>
+                <Separator/>
+                <MenuItem FontSize="12" Header="Options"></MenuItem>
+                <MenuItem FontSize="12" Header="Printing..."></MenuItem>
+                <Separator/>
+                <MenuItem FontSize="12" Header="Exit"></MenuItem>
+            </MenuItem>
+            <MenuItem Padding="6" FontSize="15" Header="Edit">
+                <MenuItem FontSize="12" Header="Cancel"></MenuItem>
+                <Separator/>
+                <MenuItem FontSize="12" Header="To cut"></MenuItem>
+                <MenuItem FontSize="12" Header="Copy"></MenuItem>
+                <MenuItem FontSize="12" Header="Paste"></MenuItem>
+                <MenuItem FontSize="12" Header="Delete"></MenuItem>
+                <Separator/>
+                <MenuItem FontSize="12" Header="Select All"></MenuItem>
+            </MenuItem>
+            <MenuItem Padding="6" FontSize="15" Header="Format">
+                <MenuItem Header="Word Wrap" IsCheckable="True" />
+                <Separator/>
+                <MenuItem Header="Fonts..."></MenuItem>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray Grid.Row="2">
+            <ToolBar Grid.Column="1">
+                <Button Height="40" Width="40" ToolBar.OverflowMode="Never">
+                    <Button.Content>
+                        <Image Source="/img/file-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Create File"/>
+                    </Button.ToolTip>
+                </Button>
+                <Separator ToolBar.OverflowMode="Never"/>
+                <Button Height="40" Width="40" ToolBar.OverflowMode="Never">
+                    <Button.Content>
+                        <Image Source="/img/clipboard-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Save File"/>
+                    </Button.ToolTip>
+                </Button>
+                <Separator ToolBar.OverflowMode="Never"/>
+                <Button Height="40" Width="40" ToolBar.OverflowMode="Never">
+                    <Button.Content>
+                        <Image Source="/img/file-alt-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Open File"/>
+                    </Button.ToolTip>
+                </Button>
+            </ToolBar>
+            <ToolBar Grid.Column="2">
+                <Button Height="40" Width="40" ToolBar.OverflowMode="Never">
+                    <Button.Content>
+                        <Image Source="/img/cut-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Cut Text"/>
+                    </Button.ToolTip>
+                </Button>
+                <Separator ToolBar.OverflowMode="Never"/>
+                <Button Height="40" Width="40" ToolBar.OverflowMode="Never">
+                    <Button.Content>
+                        <Image Source="/img/copy-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Copy Text"/>
+                    </Button.ToolTip>
+                </Button>
+                <Separator ToolBar.OverflowMode="Never"/>
+                <Button Height="40" Width="40" ToolBar.OverflowMode="Never">
+                    <Button.Content>
+                        <Image Source="/img/paste-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Insert Text"/>
+                    </Button.ToolTip>
+                </Button>
+            </ToolBar>
+
+            <ToolBar Grid.Column="3">
+                <ComboBox Width="150" FontSize="20" x:Name="cmbFontFamily" SelectionChanged="cmbFontFamily_SelectionChanged" VerticalAlignment="Center" Height="40" IsSynchronizedWithCurrentItem="False" ToolBar.OverflowMode="Never"></ComboBox>
+                <ComboBox x:Name="cmbFontSize" FontSize="20" Width="50" Height="40" VerticalAlignment="Center" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged" ToolBar.OverflowMode="Never"></ComboBox>
+                <Button x:Name="btnBold" Height="40" Width="40" ToolBar.OverflowMode="Never">
+                    <Button.Content>
+                        <Image Source="/img/bold-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Make text bold"/>
+                    </Button.ToolTip>
+                </Button>
+                <Separator ToolBar.OverflowMode="Never"/>
+                <Button x:Name="btnItalic" Height="40" Width="40" ToolBar.OverflowMode="Never">
+                    <Button.Content>
+                        <Image Source="/img/italic-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Make text italic"/>
+                    </Button.ToolTip>
+                </Button>
+            </ToolBar>
+            <ToolBar Grid.Column="3" Margin="0,0,-13,0">
+                <Button Height="40" Width="40">
+                    <Button.Content>
+                        <Image Source="/img/align-left-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Text Left"/>
+                    </Button.ToolTip>
+                </Button>
+                <Separator ToolBar.OverflowMode="Never"/>
+                <Button Height="40" Width="40">
+                    <Button.Content>
+                        <Image Source="/img/align-center-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Text Center"/>
+                    </Button.ToolTip>
+                </Button>
+                <Separator ToolBar.OverflowMode="Never"/>
+                <Button Height="40" Width="40">
+                    <Button.Content>
+                        <Image Source="/img/align-right-solid.png" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Text Right"/>
+                    </Button.ToolTip>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <WrapPanel Grid.Row="3" Grid.Column="0" Background="AliceBlue">
+            <Label Margin="10,6,0,0" FontSize="14" Content="Column:"/>
+            <Label Margin="2,6,0,0" FontSize="14" Content="1"/>
+            <Label Margin="9,6,0,0" FontSize="14" Content="Row:"/>
+            <Label Margin="2,6,0,0" FontSize="14" Content="1"/>
+            
+            <Label Margin="500,10,0,0" FontSize="11" Content="By Uximy(Евгений)"/>
+        </WrapPanel>
+    </Grid>
+</Window>
