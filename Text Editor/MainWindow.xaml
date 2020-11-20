@@ -8,41 +8,54 @@
         Title="Text Editor" MinHeight="500" MinWidth="790" Height="500" Width="790" Icon="text edor icon.png" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Topmost="True">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="37*"/>
-            <RowDefinition Height="348*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="350*"/>
             <RowDefinition Height="48*"/>
             <RowDefinition Height="38*"/>
         </Grid.RowDefinitions>
-        <!--<TextBox HorizontalAlignment="Left" x:Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" BorderBrush="White"  FontSize="21" Grid.Row="1" TextWrapping="Wrap" Width="860" Grid.ColumnSpan="3" Margin="0,0,0,39"/>-->
-        <RichTextBox Name="rtbEditor" Grid.Row="1" Grid.Column="0" SelectionChanged="rtbEditor_SelectionChanged" BorderBrush="White" FontSize="21"/>
+        <!--<TextBox x:Name="rtbEditor" Grid.Row="1" Grid.Column="0" SelectionChanged="rtbEditor_SelectionChanged" BorderBrush="White" FontSize="21"/>-->
+        <RichTextBox x:Name="rtbEditor" Grid.Row="1" Grid.Column="0" SelectionChanged="rtbEditor_SelectionChanged" BorderBrush="White" FontSize="21"/>
         <Menu Background="White" Grid.Row="0">
-            <MenuItem Padding="6" FontSize="15" Header="File">
-                <MenuItem FontSize="12" Header="Create"></MenuItem>
-                <MenuItem FontSize="12" Header="Open..."></MenuItem>
-                <MenuItem FontSize="12" Header="Save"></MenuItem>
-                <MenuItem FontSize="12" Header="Save as..."></MenuItem>
+            <MenuItem Padding="8" FontSize="15" x:Name="MenuFile" Header="File">
+                <MenuItem FontSize="12" x:Name="MenuCreate" Header="Create"></MenuItem>
+                <MenuItem FontSize="12" x:Name="MenuOpen" Click="Button_Click" Header="Open..."></MenuItem>
+                <MenuItem FontSize="12"  x:Name="MenuSave" Click="Button_Click_1" Header="Save"></MenuItem>
+                <MenuItem FontSize="12" x:Name="MenuSaveAs" Header="Save as..."></MenuItem>
                 <Separator/>
-                <MenuItem FontSize="12" Header="Options"></MenuItem>
-                <MenuItem FontSize="12" Header="Printing..."></MenuItem>
+                <MenuItem FontSize="12" x:Name="MenuOptions" Header="Options"></MenuItem>
+                <MenuItem FontSize="12" x:Name="MenuPrinting"  Header="Printing..."></MenuItem>
                 <Separator/>
-                <MenuItem FontSize="12" Header="Exit"></MenuItem>
+                <MenuItem FontSize="12" x:Name="MenuExit" Header="Exit"></MenuItem>
             </MenuItem>
-            <MenuItem Padding="6" FontSize="15" Header="Edit">
-                <MenuItem FontSize="12" Header="Cancel"></MenuItem>
+            <MenuItem Padding="6" FontSize="15" x:Name="MenuEdit" Header="Edit">
+                <MenuItem FontSize="12" x:Name="MenuCancel" Header="Cancel"></MenuItem>
                 <Separator/>
-                <MenuItem FontSize="12" Header="To cut"></MenuItem>
-                <MenuItem FontSize="12" Header="Copy"></MenuItem>
-                <MenuItem FontSize="12" Header="Paste"></MenuItem>
-                <MenuItem FontSize="12" Header="Delete"></MenuItem>
+                <MenuItem FontSize="12" x:Name="MenuTocut" Header="To cut"></MenuItem>
+                <MenuItem FontSize="12" x:Name="MenuCopy" Header="Copy"></MenuItem>
+                <MenuItem FontSize="12" x:Name="MenuPaste" Header="Paste"></MenuItem>
+                <MenuItem FontSize="12" x:Name="MenuDelete" Header="Delete"></MenuItem>
                 <Separator/>
-                <MenuItem FontSize="12" Header="Select All"></MenuItem>
+                <MenuItem FontSize="12" x:Name="MenuSelectAll" Header="Select All"></MenuItem>
             </MenuItem>
-            <MenuItem Padding="6" FontSize="15" Header="Format">
-                <MenuItem Header="Word Wrap" IsCheckable="True" />
+            <MenuItem Padding="6" FontSize="15" x:Name="MenuFormat" Header="Format">
+                <MenuItem Header="Word Wrap" x:Name="MenuWordWrap" IsCheckable="True" />
                 <Separator/>
-                <MenuItem Header="Fonts..."></MenuItem>
+                <MenuItem x:Name="MenuFonts" Header="Fonts..."></MenuItem>
             </MenuItem>
         </Menu>
+        <WrapPanel Margin="690,0,0,0">
+            <Button x:Name="RusButton" Height="30" Width="34" Margin="0,0,0,0" Background="White" BorderBrush="White" Click="RusButton_Click">
+                <Button.Content>
+                    <Image Height="26" Width="30" Source="/img/flags/ru.png" />
+                </Button.Content>
+            </Button>
+            <Button x:Name="EngButton" Height="30" Width="34" Margin="10,0,0,0" Background="White" BorderBrush="White" Click="EngButton_Click">
+                <Button.Content>
+                    <Image Height="27" Width="34" Source="/img/flags/en.png" />
+                </Button.Content>
+            </Button>
+        </WrapPanel>
+
         <ToolBarTray Grid.Row="2">
             <ToolBar Grid.Column="1">
                 <Button Height="40" Width="40" ToolBar.OverflowMode="Never">
@@ -54,7 +67,7 @@
                     </Button.ToolTip>
                 </Button>
                 <Separator ToolBar.OverflowMode="Never"/>
-                <Button Height="40" Width="40" ToolBar.OverflowMode="Never">
+                <Button Height="40" Width="40" ToolBar.OverflowMode="Never" Click="Button_Click_1">
                     <Button.Content>
                         <Image Source="/img/clipboard-solid.png" />
                     </Button.Content>
@@ -63,7 +76,7 @@
                     </Button.ToolTip>
                 </Button>
                 <Separator ToolBar.OverflowMode="Never"/>
-                <Button Height="40" Width="40" ToolBar.OverflowMode="Never">
+                <Button Height="40" Width="40" ToolBar.OverflowMode="Never" Click="Button_Click">
                     <Button.Content>
                         <Image Source="/img/file-alt-solid.png" />
                     </Button.Content>
@@ -102,25 +115,33 @@
             </ToolBar>
 
             <ToolBar Grid.Column="3">
-                <ComboBox Width="150" FontSize="20" x:Name="cmbFontFamily" SelectionChanged="cmbFontFamily_SelectionChanged" VerticalAlignment="Center" Height="40" IsSynchronizedWithCurrentItem="False" ToolBar.OverflowMode="Never"></ComboBox>
-                <ComboBox x:Name="cmbFontSize" FontSize="20" Width="50" Height="40" VerticalAlignment="Center" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged" ToolBar.OverflowMode="Never"></ComboBox>
-                <Button x:Name="btnBold" Height="40" Width="40" ToolBar.OverflowMode="Never">
-                    <Button.Content>
+                <ComboBox Width="150" FontSize="20" x:Name="cmbFontFamily" SelectionChanged="cmbFontFamily_SelectionChanged" VerticalAlignment="Center" Height="40" IsSynchronizedWithCurrentItem="False" ToolBar.OverflowMode="Never">
+                    <ComboBox.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Select Font"/>
+                    </ComboBox.ToolTip>
+                </ComboBox>
+                <ComboBox x:Name="cmbFontSize" FontSize="20" Width="50" Height="40" VerticalAlignment="Center" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged" ToolBar.OverflowMode="Never">
+                    <ComboBox.ToolTip>
+                        <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Select text size"/>
+                    </ComboBox.ToolTip>
+                </ComboBox>
+                <ToggleButton Command="EditingCommands.ToggleBold" x:Name="btnBold" Height="40" Width="40" ToolBar.OverflowMode="Never">
+                    <ToggleButton.Content>
                         <Image Source="/img/bold-solid.png" />
-                    </Button.Content>
-                    <Button.ToolTip>
+                    </ToggleButton.Content>
+                    <ToggleButton.ToolTip>
                         <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Make text bold"/>
-                    </Button.ToolTip>
-                </Button>
+                    </ToggleButton.ToolTip>
+                </ToggleButton>
                 <Separator ToolBar.OverflowMode="Never"/>
-                <Button x:Name="btnItalic" Height="40" Width="40" ToolBar.OverflowMode="Never">
-                    <Button.Content>
+                <ToggleButton Command="EditingCommands.ToggleItalic" x:Name="btnItalic" Height="40" Width="40" ToolBar.OverflowMode="Never">
+                    <ToggleButton.Content>
                         <Image Source="/img/italic-solid.png" />
-                    </Button.Content>
-                    <Button.ToolTip>
+                    </ToggleButton.Content>
+                    <ToggleButton.ToolTip>
                         <ToolTip HorizontalContentAlignment="Center" Foreground="Black" HasDropShadow="True" Content="Make text italic"/>
-                    </Button.ToolTip>
-                </Button>
+                    </ToggleButton.ToolTip>
+                </ToggleButton>
             </ToolBar>
             <ToolBar Grid.Column="3" Margin="0,0,-13,0">
                 <Button Height="40" Width="40">
@@ -152,12 +173,15 @@
             </ToolBar>
         </ToolBarTray>
         <WrapPanel Grid.Row="3" Grid.Column="0" Background="AliceBlue">
-            <Label Margin="10,6,0,0" FontSize="14" Content="Column:"/>
+            <Label Margin="10,6,0,0" x:Name="LbColumn" FontSize="14" Content="Column:"/>
             <Label Margin="2,6,0,0" FontSize="14" Content="1"/>
-            <Label Margin="9,6,0,0" FontSize="14" Content="Row:"/>
+            <Label Margin="9,6,0,0" x:Name="LbRow" FontSize="14" Content="Row:"/>
             <Label Margin="2,6,0,0" FontSize="14" Content="1"/>
-            
-            <Label Margin="500,10,0,0" FontSize="11" Content="By Uximy(Евгений)"/>
+
+
+        </WrapPanel>
+        <WrapPanel Grid.Row="3" Grid.Column="0">
+            <Label Margin="650,10,0,0" FontSize="11" Content="By Uximy(Евгений)"/>
         </WrapPanel>
     </Grid>
 </Window>
